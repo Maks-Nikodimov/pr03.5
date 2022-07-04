@@ -1,0 +1,13 @@
+---
+# handlers file for php
+- name: Start service php-fpm
+  systemd:
+    name: php-fpm
+    state: started
+    enabled: yes
+
+- name: Reload php-fpm
+  listen: Reload_php-fpm
+  systemd:
+    name: php-fpm
+    state: reloaded

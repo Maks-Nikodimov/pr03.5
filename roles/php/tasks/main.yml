@@ -1,0 +1,20 @@
+---
+# tasks file for php
+- name: install package php-fpm
+  yum:
+    name: php-fpm
+    state: latest
+  notify:
+    - Start service php-fpm
+
+- name: copy php-fpm.conf
+  copy:
+    src: www.conf
+    dest: /etc/php-fpm.d/www.conf
+  notify:
+    - Reload_php-fpm
+    
+- name: copy index.php
+  copy:
+    src: index.php
+    dest: /usr/share/nginx/html/index.php

@@ -1,0 +1,22 @@
+---
+# tasks file for http
+- name: install package nginx
+  yum:
+    name: nginx
+    state: latest
+  notify:
+    - Add http firewalld
+    - Add https firewalld
+    - Reload service firewalld
+    - Start service nginx
+
+- name: copy nginx-php-fpm.conf
+  copy:
+    src: php-fpm.conf
+    dest: /etc/nginx/conf.d/php-fpm.conf
+  notify:
+    - Reload_nginx
+
+# Disable SELinux
+- selinux:
+    state: disabled

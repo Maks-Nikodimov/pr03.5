@@ -1,0 +1,27 @@
+---
+# tasks file for users
+- name: Add pr03
+  user:
+    name: pr03
+
+- name: creating .ssh directory
+  file:
+    path: /home/pr03/.ssh
+    owner: pr03
+    group: pr03
+    state: directory
+
+- name: copy key
+  copy:
+    src: /root/.ssh/id_rsa.pub
+    dest: /home/pr03/.ssh/id_rsa.pub
+    owner: pr03
+    group: pr03
+
+-  name: Установить authorized key из файла id_rsa.pub
+   authorized_key:
+     user: pr03
+     state: present
+     key: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
+     path: /home/pr03/.ssh/authorized_keys
+     manage_dir: False
